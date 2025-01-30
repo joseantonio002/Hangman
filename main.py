@@ -11,10 +11,7 @@ import sys
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0) 
 
-# Font
-FONT = pygame.font.Font(None, 36)
 WIDTH, HEIGHT = 800, 600
-
 
 class App:
     def __init__(self):
@@ -24,6 +21,8 @@ class App:
  
     def on_init(self):
         pygame.init()
+        # Font
+        self._FONT = pygame.font.Font(None, 45)
         self._display_surf = pygame.display.set_mode((self.width, self.height))
         self._running = True
  
@@ -33,8 +32,11 @@ class App:
 
     def on_loop(self):
         pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect(200, 50, 400, 250))
-        text = FONT.render('_ ' * 10, True, BLACK)
-        screen.blit(text, (50, 50))
+        text = self._FONT.render('A ' * 10 + '_ ', True, WHITE)
+        # para centrar las letras ver si se puede hayar la anchura de la fuente como si fuera un rect y centrarlo en base a eso como hice con el botón
+        self._display_surf.blit(text, (80, 325))
+        pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect(180, 380, 445, 100))
+        pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect((self.width//2) - (200/2), 500, 200, 50))
 
     def on_render(self):
         pygame.display.flip()
