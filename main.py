@@ -32,9 +32,10 @@ class App:
 
     def on_loop(self):
         pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect(200, 50, 400, 250))
-        text = self._FONT.render('A ' * 10 + '_ ', True, WHITE)
-        # para centrar las letras ver si se puede hayar la anchura de la fuente como si fuera un rect y centrarlo en base a eso como hice con el botón
-        self._display_surf.blit(text, (80, 325))
+        text = self._FONT.render('A ' * 2 + '_ ', True, WHITE)
+        text_width = text.get_width()
+        center_x = (self.width // 2) - (text_width // 2)
+        self._display_surf.blit(text, (center_x, 325))
         pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect(180, 380, 445, 100))
         pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect((self.width//2) - (200/2), 500, 200, 50))
 
@@ -59,3 +60,16 @@ class App:
 if __name__ == "__main__" :
     theApp = App()
     theApp.on_execute()
+
+
+
+'''
+    def on_loop(self):
+        pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect(200, 50, 400, 250))
+        text = self._FONT.render('A ' * 2 + '_ ', True, WHITE)
+        text_width = text.get_width()
+        center_x = (self.width // 2) - (text_width // 2)
+        self._display_surf.blit(text, (center_x, 325))
+        pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect(180, 380, 445, 100))
+        pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect((self.width//2) - (200/2), 500, 200, 50))
+'''
