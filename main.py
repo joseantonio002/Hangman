@@ -6,6 +6,7 @@ https://www.pygame.org/docs/ref/surface.html#pygame.Surface.blit
 import pygame
 from pygame.locals import *
 import sys
+from hangmanAnimation import HangmanAnimation
  
 # Colors
 WHITE = (255, 255, 255)
@@ -31,6 +32,8 @@ class App:
             self._running = False
 
     def on_loop(self):
+        self._hangman_animation.draw_current_state(self._display_surf)
+        '''
         pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect(200, 50, 400, 250))
         text = self._FONT.render('A ' * 2 + '_ ', True, WHITE)
         text_width = text.get_width()
@@ -38,6 +41,7 @@ class App:
         self._display_surf.blit(text, (center_x, 325))
         pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect(180, 380, 445, 100))
         pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect((self.width//2) - (200/2), 500, 200, 50))
+        '''
 
     def on_render(self):
         pygame.display.flip()
@@ -50,6 +54,7 @@ class App:
         if self.on_init() == False:
             self._running = False
  
+        self._hangman_animation = HangmanAnimation()
         while( self._running ):
             for event in pygame.event.get():
                 self.on_event(event)
