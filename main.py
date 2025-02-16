@@ -2,46 +2,40 @@
 https://www.geeksforgeeks.org/how-to-draw-rectangle-in-pygame/
 https://www.pygame.org/docs/ref/surface.html#pygame.Surface.blit
 
+Modelo: Gestiona las tareas (crear, editar, eliminar).
+Vista: Muestra la lista de tareas en una interfaz gráfica.
+Controlador: Recibe las acciones del usuario (como agregar una tarea) y actualiza el modelo y la vista.
+
 '''
 import pygame
 from pygame.locals import *
 import sys
-from hangmanAnimation import HangmanAnimation
- 
-# Colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0) 
-
-WIDTH, HEIGHT = 800, 600
+from hangmanView import HangmanView
+from hangmanModel import HangmanModel
 
 class App:
     def __init__(self):
         self._running = True
-        self._display_surf = None
-        self.width, self.height = WIDTH, HEIGHT
  
     def on_init(self):
         pygame.init()
-        # Font
-        self._FONT = pygame.font.Font(None, 45)
-        self._display_surf = pygame.display.set_mode((self.width, self.height))
         self._running = True
+        self._hangman_view = HangmanView()
  
     def on_event(self, event):
         if event.type == pygame.QUIT:
             self._running = False
-
+        elif event.type == pygame.KEYDOWN:
+            if event.unicode.isalpha():
+                letter = event.unicode.upper()
+                
     def on_loop(self):
-        self._hangman_animation.draw_current_state(self._display_surf)
-        '''
-        pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect(200, 50, 400, 250))
-        text = self._FONT.render('A ' * 2 + '_ ', True, WHITE)
-        text_width = text.get_width()
-        center_x = (self.width // 2) - (text_width // 2)
-        self._display_surf.blit(text, (center_x, 325))
-        pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect(180, 380, 445, 100))
-        pygame.draw.rect(self._display_surf, (255,0,0), pygame.Rect((self.width//2) - (200/2), 500, 200, 50))
-        '''
+        self._hangman_view.show_end_message("You win!", False)
+        self._hangman_view.draw_hangman_stickman(0)
+        self._hangman_view.show_word_to_guess("pato", ["p", "o", "z", "x"], True)
+        self._hangman_view.show_wrong_letters("pato", ["p", "o", "z", "x"])
+        mouse = pygame.mouse.get_pos()
+        self._hangman_view.draw_button(mouse) 
 
     def on_render(self):
         pygame.display.flip()
@@ -54,7 +48,6 @@ class App:
         if self.on_init() == False:
             self._running = False
  
-        self._hangman_animation = HangmanAnimation()
         while( self._running ):
             for event in pygame.event.get():
                 self.on_event(event)
