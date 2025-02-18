@@ -13,7 +13,7 @@ import sys
 from hangmanView import HangmanView
 from hangmanModel import HangmanModel
 
-class App:
+class HangmangController:
     def __init__(self):
         self._running = True
  
@@ -28,14 +28,17 @@ class App:
         elif event.type == pygame.KEYDOWN:
             if event.unicode.isalpha():
                 letter = event.unicode.upper()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            self._hangman_view.check_click_button(pygame.mouse.get_pos())
+        elif event.type == pygame.MOUSEBUTTONUP:
+            self._hangman_view.check_unclick_button(pygame.mouse.get_pos())
                 
     def on_loop(self):
         self._hangman_view.show_end_message("You win!", False)
-        self._hangman_view.draw_hangman_stickman(0)
+        self._hangman_view.draw_hangman_stickman(6)
         self._hangman_view.show_word_to_guess("pato", ["p", "o", "z", "x"], True)
         self._hangman_view.show_wrong_letters("pato", ["p", "o", "z", "x"])
-        mouse = pygame.mouse.get_pos()
-        self._hangman_view.draw_button(mouse) 
+        self._hangman_view.draw_button(pygame.mouse.get_pos()) 
 
     def on_render(self):
         pygame.display.flip()
@@ -56,7 +59,7 @@ class App:
         self.on_cleanup()
  
 if __name__ == "__main__" :
-    theApp = App()
+    theApp = HangmangController()
     theApp.on_execute()
 
 
