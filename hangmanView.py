@@ -167,6 +167,6 @@ class HangmanView():
         if n_mistakes >= 5:
             leg_length = 30
             pygame.draw.line(self._display_surf, WHITE, torso_end, (torso_end[0] - leg_length + 20, torso_end[1] + leg_length), width=3) # left leg
-        if n_mistakes >= 6:
+        if n_mistakes == 6:
             pygame.draw.line(self._display_surf, WHITE, torso_end, (torso_end[0] + leg_length - 20, torso_end[1] + leg_length), width=3) # right leg
         

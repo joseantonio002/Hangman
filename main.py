@@ -21,6 +21,7 @@ class HangmangController:
         pygame.init()
         self._running = True
         self._hangman_view = HangmanView()
+        self._hangman_model = HangmanModel()
  
     def on_event(self, event):
         if event.type == pygame.QUIT:
@@ -28,10 +29,12 @@ class HangmangController:
         elif event.type == pygame.KEYDOWN:
             if event.unicode.isalpha():
                 letter = event.unicode.upper()
+                self._hangman_model.guess_letter(letter)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             self._hangman_view.check_click_button(pygame.mouse.get_pos())
         elif event.type == pygame.MOUSEBUTTONUP:
-            self._hangman_view.check_unclick_button(pygame.mouse.get_pos())
+            if self._hangman_view.check_unclick_button(pygame.mouse.get_pos()):
+                self._hangman_model.restart()
                 
     def on_loop(self):
         self._hangman_view.show_end_message("You win!", False)
