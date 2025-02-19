@@ -17,6 +17,11 @@ class HangmanView():
         self.width, self.height = WIDTH, HEIGHT
         self._display_surf = pygame.display.set_mode((self.width, self.height))
         self._FONT = pygame.font.Font(None, 45)
+
+        pygame.display.set_caption('Hardest Hangman Game Ever (HHGE)')
+        programIcon = pygame.image.load('rope.png')
+        pygame.display.set_icon(programIcon)
+        
         # button variables:
         self.button_width, self.button_height = 140, 40
         self.button_x, self.button_y = (self.width // 2) - self.button_width // 2, 480
@@ -170,3 +175,5 @@ class HangmanView():
         if n_mistakes == 6:
             pygame.draw.line(self._display_surf, WHITE, torso_end, (torso_end[0] + leg_length - 20, torso_end[1] + leg_length), width=3) # right leg
         
+    def reset_surface(self):
+        self._display_surf.fill((0, 0, 0))
